@@ -4,7 +4,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Outfit;
-
+  scroll-behavior: smooth;
 }
 body {
   min-height: 100vh;
@@ -16,6 +16,8 @@ a {
 .app {
   width: 80%;
   margin: auto;
+  
+  padding-top: 80px; /* Add padding to avoid content being hidden under the navbar */
 }
 
 @keyframes fadeIn {

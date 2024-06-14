@@ -15,29 +15,121 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: 80px;
 }
+
 .footer-content-left, .footer-content-right, .footer-content-center {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 20px;
 }
+.footer-content-left img {
+    width: 150px;
+}
+.footer-content-left p {
+    color: #a9a9a9;
+    line-height: 1.5;
+}
 
-.footer-content-left li, .footer-content-right li, .footer-content-center li {
+.footer-content-center ul, .footer-content-right ul {
+    padding: 0;
+    margin: 0;
+}
+.footer-content-center li, .footer-content-right li {
     list-style: none;
     margin-bottom: 10px;
     cursor: pointer;
+    transition: color 0.3s;
+}
+.footer-content-center li:hover, .footer-content-right li:hover {
+    color: tomato;
 }
 
 .footer-content-right h2, .footer-content-center h2 {
     color: white;
+    margin-bottom: 10px;
+}
+
+.footer-social-media-icons {
+    display: flex;
+    gap: 15px;
 }
 .footer-social-media-icons img {
-    width: 40px;
-    margin-right: 15px;
+    width: 35px;
+    transition: transform 0.3s;
+    /* margin-right: 15px; */
+    cursor: pointer;
 }
+.footer-social-media-icons img:hover {
+    transform: scale(1.1);
+}
+
 .footer hr{
     width: 100%;
     height: 2px;
     margin: 20px 0;
     background-color: grey;
+    border: none;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1050px) {
+    .footer-content {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 900px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-content-left, .footer-content-right, .footer-content-center {
+        align-items: center;
+    }
+}
+
+@media (max-width: 750px) {
+    .footer {
+        padding: 40px 4vw;
+        padding-top: 60px;
+    }
+
+    .footer-content-left img {
+        width: 120px;
+    }
+
+    .footer-content-center h2, .footer-content-right h2 {
+        font-size: 1.5rem;
+    }
+
+    .footer-social-media-icons img {
+        width: 30px;
+    }
+}
+
+@media (max-width: 500px) {
+    .footer {
+        padding: 30px 2vw;
+        padding-top: 50px;
+    }
+
+    .footer-content-left p {
+        font-size: 0.9rem;
+    }
+
+    .footer-social-media-icons img {
+        width: 25px;
+    }
+}
+
+@media (max-width: 350px) {
+    .footer-content-left p {
+        font-size: 0.8rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.8rem;
+    }
 }
