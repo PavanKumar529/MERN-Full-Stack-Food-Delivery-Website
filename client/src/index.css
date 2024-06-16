@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* html {
+  scroll-behavior: smooth;
+} */
+
 * {
   padding: 0;
   margin: 0;
@@ -14,7 +19,7 @@ a {
   color: inherit;
 }
 .app {
-  width: 80%;
+  width: 90%;
   margin: auto;
   
   padding-top: 80px; /* Add padding to avoid content being hidden under the navbar */
