@@ -1,26 +1,29 @@
 import "./Navbar.css";
 import { assets } from "../../assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from 'react-router-dom'
-const Navbar = ({setShowLogin}) => {
+import { StoreContext } from '../context/StoreContext'
+
+const Navbar = ({ setShowLogin }) => {
 
     const [menu, setMenu] = useState("menu");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { getTotalCartAmount } = useContext(StoreContext)
 
     return (
         <div className="navbar">
-            <img src={assets.logo} alt="logo" className="logo" />
+            <Link to="/"><img src={assets.logo} alt="logo" className="logo" /></Link>
             <ul className={`navbar-menu ${isMenuOpen ? "open" : ""}`}>
-                <Link to='/'><li onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>Home</li></Link>
-                <a href="#explore-menu"><li onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : ""}>Menu</li></a>
-                <a href="#app-download"><li onClick={() => setMenu("mobile-app")} className={menu === "mobile-app" ? "active" : ""}>Mobile App</li></a>
-                <a href="#footer"><li onClick={() => setMenu("contact-us")} className={menu === "contact-us" ? "active" : ""}>Contact Us</li></a>
+                <Link to='/' onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>Home</Link>
+                <a href="#explore-menu" onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : ""}>Menu</a>
+                <a href="#app-download" onClick={() => setMenu("mobile-app")} className={menu === "mobile-app" ? "active" : ""}>Mobile App</a>
+                <a href="#footer" onClick={() => setMenu("contact-us")} className={menu === "contact-us" ? "active" : ""}>Contact Us</a>
             </ul>
             <div className="navbar-right">
                 <img src={assets.search_icon} alt="search icon" />
                 <div className="navbar-search-icon">
-                    <img src={assets.basket_icon} alt="basket icon" />
-                    <div className="dot"></div>
+                    <Link to="/cart"><img src={assets.basket_icon} alt="basket icon" /></Link>
+                    <div className={getTotalCartAmount()===0?"":"dot"}></div>
                 </div>
                 <button onClick={() => setShowLogin(true)}>sign in</button>
             </div>

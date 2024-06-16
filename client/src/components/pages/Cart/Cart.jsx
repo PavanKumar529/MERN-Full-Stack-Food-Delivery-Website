@@ -1,12 +1,73 @@
-import React from 'react'
-import "./Cart.css"
+import React, { useContext } from 'react';
+import "./Cart.css";
+import { StoreContext } from "../../context/StoreContext";
 
 const Cart = () => {
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount } = useContext(StoreContext);
+
   return (
-    <div>
-      <h1>Carts Here</h1>
+    <div className='cart'>
+      <div className="cart-items">
+        <div className="cart-items-title">
+          <p>Items</p>
+          <p>Title</p>
+          <p>Price</p>
+          <p>Quantity</p>
+          <p>Total</p>
+          <p>Remove</p>
+        </div>
+        <br />
+        <hr />
+        {food_list.map((item, index) => {
+          if(cartItems[item._id] > 0) {
+            return (
+              <div key={index} className="cart-items-title cart-items-item">
+                <img src={item.image} alt=""/>
+                <p>{item.name}</p>
+                <p>Rs.{item.price}/-</p>
+                <p>{cartItems[item._id]}</p>
+                <p>₹ {item.price * cartItems[item._id]}</p>
+                <p className="remove-item" onClick={() => removeFromCart(item._id)}>X</p>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+      <div className="cart-bottom">
+        <div className="cart-total">
+          <h2>Cart Totals</h2>
+          <div>
+            <div className="cart-total-details">
+              <p>Sub-total</p>
+              <p>₹ {getTotalCartAmount()}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <p>Delivery Fee</p>
+              <p>₹ {2}</p>
+            </div>
+            <hr />
+            <div className="total-details">
+              <b>Total</b>
+              <b>₹ {getTotalCartAmount() + 2}</b>
+            </div>
+          </div>
+          <button>PROCEED TO CHECKOUT</button>
+        </div>
+        <div className="cart-promocode">
+          <div>
+            <p>If you have a promo code, Enter it here</p>
+            <div className="cart-promocode-input">
+              <input type="text" placeholder='Enter a Promocode' />
+              <button>Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Cart
+export default Cart;
