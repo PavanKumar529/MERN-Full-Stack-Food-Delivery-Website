@@ -1,28 +1,31 @@
 import express from "express"
 import dotenv from "dotenv"
 import dbConnect from "./config/dbConnect.js";  // Notice the .js extension
-
-// app config
-const app = express()
-
-app.use(express.json())
+import fooRouter from "./routes/foodRoute.js";
 
 
 // Load environment variables from .env file
 dotenv.config();
 
+// Database Connection
+dbConnect()
+
+// app config
+const app = express()
+
+app.use(express.json()) // Add this line to parse JSON bodies
+
+
 const PORT = process.env.PORT || 4000
 const hostName = process.env.HOST_NAME
 
 
-// Database Connection
-dbConnect()
 
 
 
-
-
-
+// api endpoints
+app.use("/api/food", fooRouter)
+app.use("/images", express.static("uploads"))
 
 
 // demo api
