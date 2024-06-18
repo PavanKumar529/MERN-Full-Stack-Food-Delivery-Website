@@ -22,3 +22,14 @@ hr {
   height: 1px;
   background-color: #a9a9a9;
 }
+
+.app-content {
+  display: flex;
+}
+
+/* Orders file */
+.flex-col {    
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
