@@ -6,6 +6,11 @@ import foodModel from "../models/foodModel.js"
 // Add Food Item
 const addFood = async(req, res) => {
 
+    // Check if file is uploaded correctly
+    if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded", success: false });
+    }
+
     let image_file = `${req.file.filename}`;
 
     const food = new foodModel({
@@ -18,7 +23,7 @@ const addFood = async(req, res) => {
 
     try {
         await food.save()
-        res.json({ message: "Food Added", sucess: true})
+        res.json({ message: "Food Added", success: true})
     }
     catch(error) {
         console.log(error);

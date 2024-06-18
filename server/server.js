@@ -1,5 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
+import cors from "cors"
 import dbConnect from "./config/dbConnect.js";  // Notice the .js extension
 import fooRouter from "./routes/foodRoute.js";
 
@@ -15,6 +16,7 @@ const app = express()
 
 app.use(express.json()) // Add this line to parse JSON bodies
 
+app.use(cors())
 
 const PORT = process.env.PORT || 4000
 const hostName = process.env.HOST_NAME
