@@ -2,8 +2,10 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import dbConnect from "./config/dbConnect.js";  // Notice the .js extension
-import fooRouter from "./routes/foodRoute.js";
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
 
+// import "dotenv/config.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -26,8 +28,13 @@ const hostName = process.env.HOST_NAME
 
 
 // api endpoints
-app.use("/api/food", fooRouter)
+app.use("/api/food", foodRouter)
 app.use("/images", express.static("uploads"))
+
+app.use("/api/user", userRouter)
+
+
+
 
 
 // demo api
