@@ -23,7 +23,7 @@ app.use(express.json()) // Add this line to parse JSON bodies
 app.use(cors())
 
 const PORT = process.env.PORT || 4000
-const hostName = process.env.HOST_NAME
+const hostName = process.env.HOST_NAME || "127.0.0.4"
  
 
 
@@ -34,9 +34,14 @@ app.use("/api/food", foodRouter)
 app.use("/images", express.static("uploads"))
 app.use("/api/user", userRouter)
 app.use("/api/cart", cartRouter)
-app.use("/api/order/", orderRouter)
+app.use("/api/order", orderRouter)
 
-
+// console.log("PORT:", process.env.PORT);
+// console.log("HOST_NAME:", process.env.HOST_NAME);
+// console.log("DB_URL:", process.env.DB_URL);
+// console.log("DB_NAME:", process.env.DB_NAME);
+// console.log("STRIPE_SECRET_KEY:", process.env.STRIPE_SECRET_KEY);
+// console.log("JWT_SECRET_KEY:", process.env.JWT_SECRET_KEY);
 
 
 // demo api

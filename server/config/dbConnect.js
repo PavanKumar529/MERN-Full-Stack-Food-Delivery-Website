@@ -27,10 +27,25 @@ async function dbConnect() {
     }
 }
 
+// // Handle SIGINT (Ctrl + C)
+// process.on("SIGINT", async () => {
+//     await mongoose.connection.close();
+//     process.exit(0);
+// });
+
+
+
+
 // Handle SIGINT (Ctrl + C)
 process.on("SIGINT", async () => {
-    await mongoose.connection.close();
-    process.exit(0);
+    try {
+      await mongoose.connection.close();
+      console.log("Mongoose connection closed due to app termination");
+      process.exit(0);
+    } catch (err) {
+      console.error("Error closing mongoose connection", err);
+      process.exit(1);
+    }
 });
 
 export default dbConnect;

@@ -1,58 +1,98 @@
 import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+import dotenv from 'dotenv';
 
-// Placeing user order for Frontend
+dotenv.config();
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 const placeOrder = async (req, res) => {
+    const frontend_url = "http://localhost:5174";
 
-    const frontend_url = " http://localhost:5174";
-    
     try {
-        const newOrder = new orderModel({
-            userId: req.body.userId,
-            items: req.body.items,
-            amount: req.body.amount,
-            address: req.body.address
-        })
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId, {cartData:{}});
+        const { userId, items, amount, address } = req.body;
 
-        const line_items = req.body.items.map((item) => ({
+        // Validate request body
+        if (!userId || !items || !amount || !address) {
+            return res.status(400).json({ message: "Missing required fields", success: false });
+        }
+
+        // Log the received data for debugging
+        console.log("Received order data:", { userId, items, amount, address });
+
+        // Create a new order in the database
+        const newOrder = new orderModel({
+            userId,
+            items,
+            amount,
+            address,
+        });
+
+        await newOrder.save();
+
+        // Clear the user's cart
+        await userModel.findByIdAndUpdate(userId, { cartData: {} });
+
+        // Prepare line items for Stripe
+        const line_items = items.map((item) => ({
             price_data: {
                 currency: "inr",
                 product_data: {
-                    name: item.name
+                    name: item.name,
                 },
-                unit_amount: item.price*100*80
+                unit_amount: item.price * 100,
             },
-            quantity: item.quantity
-        }))
+            quantity: item.quantity,
+        }));
 
         line_items.push({
             price_data: {
-                currency:"inr",
+                currency: "inr",
                 product_data: {
-                    name: "Delivery Charges"
+                    name: "Delivery Charges",
                 },
-                unit_amount: 2*100*80
+                unit_amount: 200,
             },
-            quantity: 1
-        })
+            quantity: 1,
+        });
 
+        // Create a Stripe session
         const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
             line_items: line_items,
             mode: "payment",
-            success_url: `${frontend_url}/verify?sucsess=true&orderId=${newOrder._id}`,
-            cancel_url: `${frontend_url}/verify?sucsess=false&orderId=${newOrder._id}`,
-        })
+            success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
+        });
 
-        res.json({ success_url: session.url, success: true })
-    }
-    catch(error) {
-        console.log(error);
-        res.json({ message: "Error", success: false })
-    }
-}
+        // Log the created Stripe session for debugging
+        console.log("Stripe session created:", session);
 
-export { placeOrder }
+        res.json({ session_url: session.url, success: true });
+    } catch (error) {
+        // Log the error details
+        console.error("Error during placeOrder:", error);
+        res.status(500).json({ message: "Internal Server Error", success: false });
+    }
+};
+
+const verifyOrder = async (req, res) => {
+    const { orderId, success } = req.body;
+
+    try {
+        if (success === "true") {
+            await orderModel.findByIdAndUpdate(orderId, { payment: true });
+            res.json({ message: "Paid", success: true });
+        } else {
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({ message: "Not Paid", success: false });
+        }
+    } catch (error) {
+        // Log the error details
+        console.error("Error during verifyOrder:", error);
+        res.status(500).json({ message: "Error", success: false });
+    }
+};
+
+export { placeOrder, verifyOrder };
