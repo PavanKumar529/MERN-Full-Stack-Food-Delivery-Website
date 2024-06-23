@@ -46,7 +46,7 @@ app.use("/api/order", orderRouter)
 
 // demo api
 app.get("/", (req, res) => {
-    res.send("<h1>Hello, I am Server</h1>")
+    res.send("<h1>Hello, I am API from Sever</h1>")
 })
 
 

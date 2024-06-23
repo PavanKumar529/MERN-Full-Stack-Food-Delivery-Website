@@ -1,0 +1,79 @@
+.my-orders {
+    margin: 50px 0px;
+    padding: 0 20px; /* Add padding for better spacing */
+}
+
+.my-orders h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.my-orders .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.my-orders-order {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
+    align-items: center;
+    gap: 20px; /* Adjust gap for better spacing */
+    font-size: 14px;
+    padding: 15px 20px; /* Increase padding for better readability */
+    color: #454545;
+    border: 1px solid #b5a1a1; /* Change border color for a softer look */
+    border-radius: 8px; /* Add border-radius for rounded corners */
+}
+
+.my-orders-order img {
+    max-width: 50px; /* Ensure images are not too large */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.my-orders-order p {
+    margin: 0; /* Remove default margin for paragraphs */
+}
+
+.my-orders-order p span {
+    color: tomato;
+}
+
+.my-orders-order p b {
+    font-weight: 500;
+    color: #454545;
+}
+
+.my-orders-order button {
+    border: none;
+    padding: 10px 20px; /* Adjust button padding */
+    border-radius: 4px;
+    background-color: #ffe1e1;
+    cursor: pointer;
+    color: #454545;
+    font-size: 14px; /* Match button font size with other text */
+    transition: background-color 0.3s ease; /* Add smooth transition */
+}
+
+.my-orders-order button:hover {
+    background-color: #f9c8c8; /* Darken button background on hover */
+}
+
+@media (max-width: 900px) {
+    .my-orders-order {
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 10px; /* Adjust gap for smaller screens */
+        font-size: 12px;
+        padding: 12px; /* Adjust padding for smaller screens */
+    }
+
+    .my-orders-order img {
+        max-width: 40px; /* Decrease image size on smaller screens */
+    }
+
+    .my-orders-order button {
+        padding: 8px 16px; /* Adjust button padding for smaller screens */
+        font-size: 12px; /* Decrease button font size */
+    }
+}
