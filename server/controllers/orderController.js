@@ -111,4 +111,36 @@ const userOrders = async(req, res) => {
     }
 }
 
-export { placeOrder, verifyOrder, userOrders };
+
+// Listening orders for admin pannel 
+const listOrders = async(req, res) => {
+    try {
+        const orders = await orderModel.find({});
+        res.json({ data: orders, success: true })
+    }
+    catch(error) {
+        console.log(error);
+        res.json({ message: "Error", success: false})
+    }
+}
+
+
+// API fro Updating order status
+const updateStatus = async(req, res) => {
+    try {
+        console.log("Request body:", req.body);
+        const order = await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        if (order) {
+            res.json({ message: "Status Updated", success: true });
+        } else {
+            res.json({ message: "Order not found", success: false });
+        }
+    }
+    catch(error) {
+        console.log("Error during updateStatus:", error);
+        res.json({ message: "Error while Updating Status", success: false })
+    }
+}
+
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };
