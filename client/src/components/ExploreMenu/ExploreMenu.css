@@ -31,9 +31,11 @@
     margin: 20px 0px;
     overflow: scroll;
     /* padding-bottom: 10px; */
+        scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 .explore-menu-list::-webkit-scrollbar {
-    display: none;
+    display: none;    /* For Chrome, Safari, and Opera */
 }
 
 .explore-menu-list-item {
@@ -129,4 +131,4 @@
     .explore-menu-text {
         font-size: 0.6rem;
     }
-} */
+} 

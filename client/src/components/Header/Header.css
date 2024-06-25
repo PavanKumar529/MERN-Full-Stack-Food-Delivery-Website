@@ -2,8 +2,10 @@
     height: 34vw;
     margin: 30px auto;
     background: url('../../assets/header_img.png') no-repeat;
-    background-size: cover; /* Changed from contain to cover for better responsiveness */
+    background-size: contain;     /* Changed from cover to contain for scaling without cropping */
+   /* background-size: 90%; */    /* Scales the image to 50% of the width and height of the element */
     position: relative;
+    background-position: center;   
 }
 .header-contents {
     position: absolute;
